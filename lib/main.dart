@@ -1,6 +1,7 @@
-import 'package:defer_load_web/pages/page1/exporter.dart';
-import 'package:defer_load_web/pages/page2/exporter.dart';
+import 'package:defer_load_web/pages/page1/page1_loader.dart';
+import 'package:defer_load_web/pages/page2/page2_loader.dart';
 import 'package:defer_load_web/pages/page3.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        pageTransitionsTheme: NoTransitionsOnWeb(),
       ),
       home: const HomePage(),
     );
@@ -63,6 +65,28 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class NoTransitionsOnWeb extends PageTransitionsTheme {
+  @override
+  Widget buildTransitions<T>(
+    route,
+    context,
+    animation,
+    secondaryAnimation,
+    child,
+  ) {
+    if (kIsWeb) {
+      return child;
+    }
+    return super.buildTransitions(
+      route,
+      context,
+      animation,
+      secondaryAnimation,
+      child,
     );
   }
 }
